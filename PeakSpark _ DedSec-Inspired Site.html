@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PeakSpark | Custom Software &amp; Workflow Automation</title>
+<meta name="description" content="PeakSpark builds custom software, business management systems, CRM, integrations and workflow automation for businesses and development agencies worldwide.">
+<meta property="og:title" content="PeakSpark | Custom Software Engineering">
+<meta property="og:description" content="Software built around the way your business actually works.">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#08090b;--bg2:#101216;--el:#171a20;--tx:#f4f4f0;--mu:#9298a1;--g:#b8ff35;--lime:#d5ff69;--cy:#00d9ff;--or:#ff6b35;--ln:#2a2e36;color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth;scroll-padding-top:90px;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 18px/1.6 "Space Grotesk",system-ui,sans-serif;overflow-x:hidden}
+.mono{font-family:"Space Mono",ui-monospace,Menlo,Consolas,monospace;font-size:.78rem;letter-spacing:.04em;color:var(--mu)}
+.d{font-family:Anton,Impact,"Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;line-height:.95;margin:0;letter-spacing:.01em}
+h2.d{font-size:clamp(2.4rem,7vw,5.6rem)}h3{margin:0}
+a{color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+section{padding:120px 0;position:relative;border-top:1px solid var(--ln)}
+:focus-visible{outline:3px solid var(--g);outline-offset:3px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--g);color:#000;padding:10px 14px;z-index:200}.skip:focus{left:8px}
+.grain{position:fixed;inset:0;z-index:90;pointer-events:none;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+.scan{position:fixed;inset:0;z-index:89;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.18) 0 1px,transparent 1px 3px);opacity:.35}
+/* loader */
+#load{position:fixed;inset:0;z-index:300;background:var(--bg);display:grid;place-content:center;gap:14px;padding:24px;transition:opacity .4s,visibility .4s}
+#load.off{opacity:0;visibility:hidden}
+#load .d{font-size:clamp(1.6rem,5vw,3rem);color:var(--g)}
+#load p{margin:0;color:var(--tx)}
+.bar{height:3px;background:var(--ln);width:min(420px,80vw)}.bar i{display:block;height:100%;width:0;background:var(--g);transition:width 1.4s linear}
+/* nav */
+.nav{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:100;width:min(1180px,calc(100% - 24px));display:flex;justify-content:space-between;align-items:center;gap:12px;padding:6px 8px 6px 18px;background:rgba(16,18,22,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--ln)}
+.brand{font:400 1.4rem Anton,sans-serif;text-decoration:none;letter-spacing:.05em}.brand b{color:var(--g);font-weight:400}
+.nav ul{display:flex;gap:4px;list-style:none;margin:0;padding:0}
+.nav li a{display:inline-flex;align-items:center;min-height:48px;padding:0 12px;font:400 .76rem "Space Mono",monospace;text-decoration:none;color:var(--mu);letter-spacing:.06em}
+.nav li a:hover,.nav li a.act{color:var(--g)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 26px;font:700 .82rem "Space Mono",monospace;letter-spacing:.08em;text-decoration:none;border:1px solid var(--g);color:#000;background:var(--g);cursor:pointer;transition:background .2s,color .2s,transform .15s;will-change:transform;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px))}
+.btn:hover{background:var(--lime)}
+.btn.o{background:transparent;color:var(--g)}.btn.o:hover{background:var(--g);color:#000}
+.menu{display:none;min-height:48px;min-width:48px;background:none;border:1px solid var(--ln);color:var(--tx);font:700 .8rem "Space Mono",monospace;cursor:pointer}
+/* hero */
+.hero{min-height:100vh;display:flex;align-items:flex-end;padding:140px 0 70px;border-top:0;overflow:hidden}
+#net{position:absolute;inset:0;width:100%;height:100%}
+.emb{position:absolute;right:4%;top:18%;width:min(34vw,420px);opacity:.9;z-index:1}
+.emb .s1{animation:spin 40s linear infinite;transform-origin:200px 200px}.emb .s2{animation:spin 26s linear infinite reverse;transform-origin:200px 200px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.lbl{position:absolute;font:400 .7rem "Space Mono",monospace;color:var(--g);z-index:2}
+.hero h1{font-size:clamp(3rem,10.5vw,9.4rem);max-width:11em;position:relative}
+.hero h1 em{font-style:normal;color:var(--g)}
+.gl{position:relative}.gl::before,.gl::after{content:attr(data-t);position:absolute;inset:0;opacity:0;pointer-events:none;white-space:pre-wrap}
+.gl::before{color:var(--cy);clip-path:inset(20% 0 55% 0);transform:translateX(-4px)}.gl::after{color:var(--or);clip-path:inset(60% 0 10% 0);transform:translateX(4px)}
+.gl.on::before,.gl.on::after{opacity:.85}
+.hero p.lead{max-width:34em;margin:28px 0 34px;font-size:1.2rem;color:#d5d7dc}
+.row{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.stat{display:inline-block;border:1px solid var(--ln);padding:6px 12px;margin-bottom:22px;color:var(--g)}
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .7s,transform .7s}.rv.in{opacity:1;transform:none}
+/* signal */
+.sig{display:grid;grid-template-columns:1.2fr 1fr;gap:56px;align-items:start}
+.sig h2 span{color:var(--g)}
+.sig p{color:#cfd2d8;margin:0 0 18px;max-width:30em}
+.cross{width:100%;max-width:340px;margin-top:24px}
+/* modules */
+.mods{margin-top:56px;border-top:1px solid var(--ln)}
+.mod{display:grid;grid-template-columns:70px 1fr 1.2fr 120px;gap:24px;align-items:center;padding:28px 12px;border-bottom:1px solid var(--ln);transition:background .2s;position:relative}
+.mod:hover,.mod:focus-within{background:var(--bg2)}
+.mod .n{color:var(--g)}
+.mod h3{font:400 clamp(1.5rem,3vw,2.3rem) Anton,sans-serif;text-transform:uppercase;letter-spacing:.01em}
+.mod:hover h3{animation:jit .3s steps(2) 1;color:var(--g)}
+@keyframes jit{25%{transform:translateX(-3px);text-shadow:3px 0 var(--cy)}75%{transform:translateX(3px);text-shadow:-3px 0 var(--or)}}
+.mod p{margin:0;color:#c3c7ce;font-size:1rem}
+.mod svg{width:110px;height:60px;justify-self:end}
+.mod svg *{stroke:var(--mu);fill:none;stroke-width:1.5;transition:stroke .2s}.mod:hover svg *{stroke:var(--g)}
+.mod:nth-child(3n+2):hover svg *{stroke:var(--cy)}.mod:nth-child(3n):hover svg *{stroke:var(--or)}
+/* philosophy */
+.phil{background:var(--bg2)}
+.pr{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ln);margin-top:56px;border:1px solid var(--ln)}
+.pr div{background:var(--bg2);padding:36px 30px}
+.pr b{display:block;font:400 clamp(3rem,6vw,5rem) Anton,sans-serif;color:transparent;-webkit-text-stroke:1.5px var(--g);line-height:1}
+.pr h3{font:700 1.05rem "Space Mono",monospace;margin:14px 0 8px;letter-spacing:.04em}
+.pr p{margin:0;color:#c3c7ce}
+/* partners */
+.pt{display:grid;grid-template-columns:1fr 1fr;gap:56px;margin-top:48px}
+.caps{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.caps li{padding:13px 0;border-bottom:1px solid var(--ln);display:flex;gap:14px}.caps li::before{content:"+";color:var(--g);font-family:"Space Mono",monospace}
+.st{display:grid;gap:0}
+.st div{padding:20px 0 20px 26px;border-left:2px solid var(--ln);position:relative}
+.st div::before{content:"";position:absolute;left:-6px;top:28px;width:10px;height:10px;background:var(--bg);border:2px solid var(--g)}
+.st h3{font:700 .95rem "Space Mono",monospace;color:var(--g)}.st p{margin:4px 0 0;color:#c3c7ce;font-size:1rem}
+/* timeline */
+.tl{position:relative;display:grid;grid-template-columns:repeat(5,1fr);gap:20px;margin-top:70px}
+.tl::before{content:"";position:absolute;left:0;right:0;top:9px;height:2px;background:var(--ln)}
+.tl .fill{position:absolute;left:0;top:9px;height:2px;width:0;background:var(--g);box-shadow:0 0 10px var(--g)}
+.tl div{position:relative;padding-top:38px}
+.tl div::before{content:"";position:absolute;top:0;left:0;width:20px;height:20px;background:var(--bg);border:2px solid var(--ln);transition:border-color .4s,background .4s}
+.tl div.in::before{border-color:var(--g);background:var(--g)}
+.tl h3{font:400 1.5rem Anton,sans-serif;text-transform:uppercase}.tl p{margin:8px 0 0;color:#c3c7ce;font-size:1rem}
+/* lab */
+.lab{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:56px}
+.cc{background:var(--el);border:1px solid var(--ln);padding:22px;transition:border-color .2s,transform .2s}
+.cc:hover{border-color:var(--g);transform:translateY(-4px)}
+.cc svg{width:100%;height:150px;background:var(--bg);border:1px solid var(--ln);margin-bottom:16px}
+.tg{display:inline-block;border:1px solid var(--or);color:var(--or);padding:2px 8px;margin-bottom:10px}
+.cc h3{font:400 1.7rem Anton,sans-serif;text-transform:uppercase}.cc p{margin:6px 0 0;color:#c3c7ce;font-size:1rem}
+/* contact */
+.ct{display:grid;grid-template-columns:1fr 1.1fr;gap:56px}
+form{display:grid;gap:18px}
+label{display:block;font:700 .78rem "Space Mono",monospace;letter-spacing:.06em;margin-bottom:6px}
+input,select,textarea{width:100%;min-height:52px;background:var(--bg2);color:var(--tx);border:1px solid #4a505b;padding:12px 14px;font:inherit;border-radius:0}
+textarea{min-height:140px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:0;border-color:var(--g);box-shadow:0 0 0 2px rgba(184,255,53,.35)}
+input[aria-invalid=true],textarea[aria-invalid=true]{border-color:var(--or)}
+.err{color:#ff9a73;font-size:.88rem;min-height:1.2em;margin-top:4px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+#fs{padding:14px 16px;border:1px solid var(--ln);display:none}
+#fs.ok{display:block;border-color:var(--g);color:var(--g)}#fs.bad{display:block;border-color:var(--or);color:#ffb08f}
+.pv{font-size:.88rem;color:var(--mu)}
+footer{padding:36px 0 40px;border-top:1px solid var(--ln)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+#cur{position:fixed;width:34px;height:34px;border:1px solid var(--g);border-radius:50%;pointer-events:none;z-index:250;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;display:none}
+#cur.h{width:56px;height:56px;background:rgba(184,255,53,.15)}
+@media(hover:hover) and (pointer:fine){body.cc-on{cursor:none}body.cc-on a,body.cc-on button,body.cc-on input,body.cc-on select,body.cc-on textarea{cursor:none}#cur{display:block}}
+@media(max-width:980px){
+ .nav ul{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;flex-direction:column;background:var(--bg2);border:1px solid var(--ln);padding:8px}.nav ul.open{display:flex}
+ .menu{display:inline-flex;align-items:center;justify-content:center}.nav .btn{display:none}
+ .sig,.pt,.ct{grid-template-columns:1fr}.mod{grid-template-columns:50px 1fr}.mod p{grid-column:2}.mod svg{display:none}
+ .tl{grid-template-columns:1fr;gap:0}.tl::before{left:9px;right:auto;top:0;bottom:0;width:2px;height:auto}.tl .fill{display:none}.tl div{padding:0 0 30px 44px}
+ .emb{opacity:.4;width:60vw;right:-10%}
+}
+@media(max-width:640px){section{padding:80px 0}.wrap{padding:0 18px}.pr,.lab{grid-template-columns:1fr}.lbl{display:none}.row .btn{width:100%}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="grain" aria-hidden="true"></div><div class="scan" aria-hidden="true"></div><div id="cur" aria-hidden="true"></div>
+
+<div id="load" role="status" aria-live="polite">
+ <div class="d">PEAKSPARK // INITIALISING</div>
+ <p class="mono" id="lm">[ ESTABLISHING CONNECTION ]</p>
+ <div class="bar"><i id="lb"></i></div>
+</div>
+
+<header class="nav" id="nav">
+ <a class="brand" href="#home" aria-label="PeakSpark home">PEAK<b>SPARK</b></a>
+ <button class="menu" id="mb" aria-expanded="false" aria-controls="nl">MENU</button>
+ <ul id="nl">
+  <li><a href="#home">HOME</a></li><li><a href="#capabilities">CAPABILITIES</a></li><li><a href="#philosophy">PHILOSOPHY</a></li><li><a href="#partnerships">PARTNERSHIPS</a></li><li><a href="#work">WORK</a></li><li><a href="#contact">CONTACT</a></li>
+ </ul>
+ <a class="btn mag" href="#contact">INITIATE CONTACT ↗</a>
+</header>
+
+<main id="main">
+<section class="hero" id="home">
+ <canvas id="net" aria-hidden="true"></canvas>
+ <svg class="emb" viewBox="0 0 400 400" aria-hidden="true" fill="none" stroke-width="2">
+  <g class="s1" stroke="#b8ff35"><path d="M200 30 350 290H50Z" stroke-dasharray="120 30"/><path d="M200 80 310 270H90Z" opacity=".5"/></g>
+  <g class="s2" stroke="#00d9ff"><circle cx="200" cy="200" r="150" stroke-dasharray="4 14"/><path d="M200 50v40M200 310v40M50 200h40M310 200h40"/></g>
+  <path d="M200 120 260 230H140Z" stroke="#ff6b35"/><circle cx="200" cy="200" r="5" fill="#b8ff35" stroke="none"/>
+ </svg>
+ <span class="lbl" style="top:22%;left:6%">LAT 22.7196 // LON 75.8577</span>
+ <span class="lbl" style="top:30%;right:8%;color:var(--cy)">NODE_ID 0xPS01</span>
+ <div class="wrap">
+  <div class="stat mono">[ PEAKSPARK NETWORK // ONLINE ]</div>
+  <h1 class="d gl" id="h1" data-t="WE BUILD THE SYSTEMS BEHIND YOUR NEXT MOVE.">WE BUILD THE SYSTEMS BEHIND <em>YOUR NEXT MOVE.</em></h1>
+  <p class="lead">Custom software, intelligent business systems and workflow automation engineered around the way your business actually works.</p>
+  <div class="row"><a class="btn mag" href="#capabilities">EXPLORE CAPABILITIES</a><a class="btn o mag" href="#contact">START A CONVERSATION</a></div>
+ </div>
+</section>
+
+<section id="signal">
+ <div class="wrap sig">
+  <h2 class="d rv">TECHNOLOGY SHOULD SOLVE PROBLEMS. <span>NOT CREATE MORE OF THEM.</span></h2>
+  <div class="rv">
+   <p>We work with businesses and development agencies to build software that makes operations simpler, workflows smarter and ideas functional.</p>
+   <p>No unnecessary complexity. No artificial requirements. Just thoughtful engineering built around real problems.</p>
+   <svg class="cross" viewBox="0 0 340 120" fill="none" stroke="#b8ff35" stroke-width="1.5" aria-hidden="true"><circle cx="60" cy="60" r="34"/><circle cx="60" cy="60" r="12"/><path d="M60 8v26M60 86v26M8 60h26M86 60h26"/><path d="M130 60h200M130 40h120M130 80h160" stroke="#2a2e36"/><path d="M130 60h80" stroke="#b8ff35"/></svg>
+  </div>
+ </div>
+</section>
+
+<section id="capabilities">
+ <div class="wrap">
+  <p class="mono">// SYSTEM MODULES</p>
+  <h2 class="d rv">WHAT WE BUILD</h2>
+  <div class="mods">
+   <article class="mod rv"><span class="n mono">MOD_01</span><h3>Custom Software</h3><p>Purpose-built applications designed around your business requirements, processes and operational needs.</p><svg viewBox="0 0 110 60" aria-hidden="true"><path d="M30 10 10 30l20 20M80 10l20 20-20 20M62 6 48 54"/></svg></article>
+   <article class="mod rv"><span class="n mono">MOD_02</span><h3>Business Management Systems</h3><p>Centralised business applications covering inventory, employees, operations, reporting and internal workflows.</p><svg viewBox="0 0 110 60" aria-hidden="true"><rect x="8" y="8" width="38" height="44"/><rect x="56" y="8" width="46" height="20"/><rect x="56" y="34" width="46" height="18"/></svg></article>
+   <article class="mod rv"><span class="n mono">MOD_03</span><h3>CRM &amp; Client Management</h3><p>Custom client management systems that help businesses organise relationships, enquiries, pipelines and customer operations.</p><svg viewBox="0 0 110 60" aria-hidden="true"><circle cx="55" cy="30" r="9"/><circle cx="15" cy="12" r="5"/><circle cx="95" cy="14" r="5"/><circle cx="20" cy="50" r="5"/><circle cx="92" cy="50" r="5"/><path d="M46 25 19 14M64 25l27-8M46 36 24 47M64 36l24 11"/></svg></article>
+   <article class="mod rv"><span class="n mono">MOD_04</span><h3>Workflow Automation</h3><p>Connect existing systems, eliminate repetitive tasks and create more efficient business processes through automation and API integrations.</p><svg viewBox="0 0 110 60" aria-hidden="true"><rect x="4" y="20" width="26" height="20"/><rect x="42" y="20" width="26" height="20"/><rect x="80" y="20" width="26" height="20"/><path d="M30 30h12M68 30h12"/></svg></article>
+   <article class="mod rv"><span class="n mono">MOD_05</span><h3>System Integration</h3><p>Connect platforms, databases and third-party services into cohesive business workflows.</p><svg viewBox="0 0 110 60" aria-hidden="true"><path d="M8 20h30l14 10-14 10H8M102 20H72L58 30l14 10h30"/></svg></article>
+   <article class="mod rv"><span class="n mono">MOD_06</span><h3>Maintenance &amp; Development</h3><p>Improve existing applications, resolve technical issues, introduce new capabilities and maintain software over time.</p><svg viewBox="0 0 110 60" aria-hidden="true"><circle cx="55" cy="30" r="14"/><path d="M55 6v10M55 44v10M31 30h10M69 30h10M38 13l7 7M72 40l7 7M72 20l7-7M38 47l7-7"/></svg></article>
+  </div>
+ </div>
+</section>
+
+<section class="phil" id="philosophy">
+ <div class="wrap">
+  <p class="mono">// OPERATING MANIFESTO</p>
+  <h2 class="d rv">LESS BLOAT. MORE PURPOSE.</h2>
+  <div class="pr">
+   <div class="rv"><b>01</b><h3>UNDERSTAND FIRST</h3><p>Understand the actual business problem before proposing a solution.</p></div>
+   <div class="rv"><b>02</b><h3>BUILD WHAT MATTERS</h3><p>Only introduce functionality that serves a genuine purpose.</p></div>
+   <div class="rv"><b>03</b><h3>ENGINEER WITH INTENT</h3><p>Prioritise maintainability, usability, reliability and sensible architecture.</p></div>
+   <div class="rv"><b>04</b><h3>DELIVER REAL VALUE</h3><p>The objective is not to create more software. It is to make something genuinely useful.</p></div>
+  </div>
+ </div>
+</section>
+
+<section id="partnerships">
+ <div class="wrap">
+  <p class="mono">// THE BACKCHANNEL</p>
+  <h2 class="d rv">YOUR TEAM. OUR ENGINEERING. ONE DELIVERY.</h2>
+  <p class="rv" style="max-width:38em;margin-top:24px;color:#cfd2d8">We collaborate with software development agencies that need additional engineering capacity, technical execution or a reliable development partner behind the scenes.</p>
+  <div class="pt">
+   <ul class="caps rv"><li>White-label development</li><li>Custom application development</li><li>Frontend and backend engineering</li><li>API integrations</li><li>Workflow automation</li><li>Ongoing technical support</li><li>Project-based development</li><li>Additional engineering capacity</li></ul>
+   <div class="st rv">
+    <div><h3>01 // DISCUSS</h3><p>Understand your project, delivery expectations and existing team structure.</p></div>
+    <div><h3>02 // ALIGN</h3><p>Establish the technical requirements, responsibilities and scope.</p></div>
+    <div><h3>03 // BUILD</h3><p>Execute the development work with clear communication and agreed milestones.</p></div>
+    <div><h3>04 // DELIVER</h3><p>Provide the completed work and support the agreed handover process.</p></div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="phil" id="process">
+ <div class="wrap">
+  <p class="mono">// HOW WE WORK</p>
+  <h2 class="d rv">DISCOVERY → SCOPING → DEVELOPMENT → TESTING → DEPLOYMENT</h2>
+  <div class="tl" id="tl"><span class="fill" id="tf"></span>
+   <div><h3>Discovery</h3><p>We learn how your business runs and where the real problem sits.</p></div>
+   <div><h3>Scoping</h3><p>We agree what gets built, what does not, and how it will be delivered.</p></div>
+   <div><h3>Development</h3><p>We build in stages, with regular updates so you can see progress.</p></div>
+   <div><h3>Testing</h3><p>We check the software against your real workflows before it goes live.</p></div>
+   <div><h3>Deployment</h3><p>We release it, hand over documentation and agree ongoing support.</p></div>
+  </div>
+ </div>
+</section>
+
+<section id="work">
+ <div class="wrap">
+  <p class="mono">// EXPERIMENTAL LAB</p>
+  <h2 class="d rv">CONCEPTS IN DEVELOPMENT</h2>
+  <p class="rv" style="max-width:38em;margin-top:24px;color:#cfd2d8">Real client work will appear here as it can be shared. Until then, these are labelled concepts. None is a completed client project.</p>
+  <div class="lab">
+   <article class="cc rv"><svg viewBox="0 0 300 150" aria-hidden="true"><g fill="#b8ff35"><rect x="20" y="90" width="26" height="40"/><rect x="60" y="60" width="26" height="70"/><rect x="100" y="75" width="26" height="55"/><rect x="140" y="40" width="26" height="90" fill="#00d9ff"/></g><g fill="none" stroke="#2a2e36"><rect x="190" y="20" width="90" height="40"/><rect x="190" y="70" width="90" height="60"/></g></svg><span class="tg mono">CONCEPT PROJECT</span><h3>Business Dashboard</h3><p>A single view of operations, reporting and team activity.</p></article>
+   <article class="cc rv"><svg viewBox="0 0 300 150" aria-hidden="true"><g fill="none" stroke="#2a2e36"><rect x="20" y="20" width="260" height="22"/><rect x="20" y="52" width="260" height="22"/><rect x="20" y="84" width="260" height="22"/><rect x="20" y="116" width="260" height="22"/></g><g fill="#b8ff35"><rect x="30" y="28" width="90" height="6"/><rect x="30" y="60" width="70" height="6"/><rect x="30" y="92" width="110" height="6"/></g><rect x="230" y="92" width="40" height="6" fill="#ff6b35"/></svg><span class="tg mono">INTERFACE EXPERIMENT</span><h3>Inventory Management</h3><p>Stock levels, movements and low-stock flags in one table.</p></article>
+   <article class="cc rv"><svg viewBox="0 0 300 150" aria-hidden="true"><g fill="none" stroke="#2a2e36"><rect x="15" y="15" width="80" height="120"/><rect x="110" y="15" width="80" height="120"/><rect x="205" y="15" width="80" height="120"/></g><g fill="#00d9ff"><rect x="25" y="28" width="60" height="22"/><rect x="25" y="58" width="60" height="22"/><rect x="120" y="28" width="60" height="22"/></g><rect x="215" y="28" width="60" height="22" fill="#b8ff35"/></svg><span class="tg mono">INTERFACE EXPERIMENT</span><h3>CRM Pipeline</h3><p>Enquiries moving from first contact through to a closed deal.</p></article>
+   <article class="cc rv"><svg viewBox="0 0 300 150" aria-hidden="true"><g fill="none" stroke="#b8ff35" stroke-width="1.5"><rect x="15" y="55" width="60" height="40"/><rect x="120" y="20" width="60" height="40"/><rect x="120" y="90" width="60" height="40"/><rect x="225" y="55" width="60" height="40"/><path d="M75 75h20l25-35M75 75h20l25 35M180 40h20l25 35M180 110h20l25-35"/></g></svg><span class="tg mono">DEVELOPMENT DEMO</span><h3>Workflow Automation</h3><p>A visual map of steps that run without manual effort.</p></article>
+  </div>
+ </div>
+</section>
+
+<section id="contact">
+ <div class="wrap ct">
+  <div>
+   <p class="mono">// FINAL TRANSMISSION</p>
+   <h2 class="d rv">HAVE SOMETHING WORTH BUILDING?</h2>
+   <p style="max-width:28em;margin:24px 0 30px;color:#cfd2d8">Tell us what you’re working on, what isn’t working or what you want to improve. We’ll take a look and get back to you.</p>
+   <div class="row"><a class="btn mag" href="#enq">START A CONVERSATION</a><a class="btn o mag" href="#capabilities">EXPLORE WHAT WE DO</a></div>
+  </div>
+  <form id="enq" novalidate>
+   <div class="hp" aria-hidden="true"><label for="website">Leave this field empty</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
+   <div><label for="nm">NAME</label><input id="nm" name="name" autocomplete="name" required aria-describedby="e-nm"><div class="err" id="e-nm"></div></div>
+   <div><label for="em">WORK EMAIL</label><input id="em" name="email" type="email" autocomplete="email" required aria-describedby="e-em"><div class="err" id="e-em"></div></div>
+   <div><label for="co">COMPANY (OPTIONAL)</label><input id="co" name="company" autocomplete="organization"></div>
+   <div><label for="hp">WHAT DO YOU NEED HELP WITH?</label>
+    <select id="hp" name="need"><option>Custom software</option><option>Business management system</option><option>CRM</option><option>Workflow automation or integration</option><option>Maintaining existing software</option><option>Agency partnership</option><option>Something else</option></select></div>
+   <div><label for="ds">PROJECT DESCRIPTION</label><textarea id="ds" name="description" required aria-describedby="e-ds"></textarea><div class="err" id="e-ds"></div></div>
+   <p class="pv">We use your details only to reply to this enquiry. We do not sell or share them.</p>
+   <button class="btn mag" type="submit" id="sb">SEND ENQUIRY</button>
+   <div id="fs" role="status" aria-live="polite"></div>
+  </form>
+ </div>
+</section>
+</main>
+
+<footer><div class="wrap"><span class="mono">PEAKSPARK // CUSTOM SOFTWARE ENGINEERING</span><span class="mono">Working with clients internationally</span></div></footer>
+
+<script>
+/* ===== CONFIG: set these before launch ===== */
+var CONFIG={endpoint:"",email:""}; /* endpoint: a form service URL that accepts JSON POST; email: public enquiry address */
+(function(){
+var RM=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var $=function(s){return document.querySelector(s)};
+/* loader */
+var ld=$('#load'),msgs=['[ ESTABLISHING CONNECTION ]','[ LOADING INTERFACE MODULES ]','[ CONNECTION ESTABLISHED ]'];
+function hide(){ld.classList.add('off');setTimeout(function(){ld.style.display='none'},450)}
+if(RM){ld.style.display='none'}else{
+ requestAnimationFrame(function(){$('#lb').style.width='100%'});
+ msgs.forEach(function(m,i){setTimeout(function(){$('#lm').textContent=m},i*550)});
+ setTimeout(hide,1700)}
+/* nav */
+var mb=$('#mb'),nl=$('#nl');
+mb.addEventListener('click',function(){var o=nl.classList.toggle('open');mb.setAttribute('aria-expanded',o);mb.textContent=o?'CLOSE':'MENU'});
+nl.addEventListener('click',function(e){if(e.target.tagName==='A'){nl.classList.remove('open');mb.setAttribute('aria-expanded',false);mb.textContent='MENU'}});
+var links=[].slice.call(nl.querySelectorAll('a'));
+var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('act',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
+['home','capabilities','philosophy','partnerships','work','contact'].forEach(function(id){so.observe(document.getElementById(id))});
+/* reveal */
+var ro=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');ro.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.rv').forEach(function(x){ro.observe(x)});
+/* timeline */
+var tl=$('#tl'),steps=[].slice.call(tl.children).filter(function(x){return x.tagName==='DIV'}),tf=$('#tf');
+function tlu(){var r=tl.getBoundingClientRect(),p=Math.min(1,Math.max(0,(innerHeight*.75-r.top)/(r.height+innerHeight*.2)));
+ tf.style.width=(p*100)+'%';steps.forEach(function(s,i){s.classList.toggle('in',p>(i+.4)/steps.length*.95||RM)})}
+addEventListener('scroll',tlu,{passive:true});tlu();
+/* glitch headline */
+var h1=$('#h1');if(!RM)setInterval(function(){h1.classList.add('on');setTimeout(function(){h1.classList.remove('on')},180)},4200);
+/* cursor + magnetic */
+var mx=-999,my=-999,cur=$('#cur');
+if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!RM){document.body.classList.add('cc-on');
+ addEventListener('pointermove',function(e){cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px'});
+ document.querySelectorAll('a,button').forEach(function(a){a.addEventListener('pointerenter',function(){cur.classList.add('h')});a.addEventListener('pointerleave',function(){cur.classList.remove('h')})});
+ document.querySelectorAll('.mag').forEach(function(b){b.addEventListener('pointermove',function(e){var r=b.getBoundingClientRect();b.style.transform='translate('+(e.clientX-r.left-r.width/2)*.18+'px,'+(e.clientY-r.top-r.height/2)*.28+'px)'});b.addEventListener('pointerleave',function(){b.style.transform=''})})}
+/* particle network (2D canvas, no library) */
+var cv=$('#net'),c=cv.getContext('2d'),W,H,P=[],hero=$('#home');
+function sz(){var r=hero.getBoundingClientRect();W=cv.width=r.width;H=cv.height=r.height;var n=Math.round(Math.min(90,W*H/16000));P=[];for(var i=0;i<n;i++)P.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35})}
+sz();addEventListener('resize',sz);
+hero.addEventListener('pointermove',function(e){var r=hero.getBoundingClientRect();mx=e.clientX-r.left;my=e.clientY-r.top});
+hero.addEventListener('pointerleave',function(){mx=my=-999});
+var vis=true;new IntersectionObserver(function(e){vis=e[0].isIntersecting}).observe(hero);
+function draw(){if(vis){c.clearRect(0,0,W,H);
+ for(var i=0;i<P.length;i++){var a=P[i];if(!RM){a.x+=a.vx;a.y+=a.vy;if(a.x<0||a.x>W)a.vx*=-1;if(a.y<0||a.y>H)a.vy*=-1}
+  var dm=Math.hypot(a.x-mx,a.y-my);if(dm<140&&!RM){a.x+=(a.x-mx)*.012;a.y+=(a.y-my)*.012}
+  for(var j=i+1;j<P.length;j++){var b=P[j],d=Math.hypot(a.x-b.x,a.y-b.y);if(d<130){c.strokeStyle='rgba(184,255,53,'+(.28*(1-d/130))+')';c.beginPath();c.moveTo(a.x,a.y);c.lineTo(b.x,b.y);c.stroke()}}
+  if(dm<170){c.strokeStyle='rgba(0,217,255,'+(.55*(1-dm/170))+')';c.beginPath();c.moveTo(a.x,a.y);c.lineTo(mx,my);c.stroke()}
+  c.fillStyle=i%11===0?'#ff6b35':'#b8ff35';c.fillRect(a.x-1.5,a.y-1.5,3,3)}}
+ if(!RM)requestAnimationFrame(draw)}
+draw();
+/* form */
+var f=$('#enq'),fs=$('#fs'),sb=$('#sb');
+function say(t,cls,html){fs.className=cls;if(html){fs.innerHTML=html}else{fs.textContent=t}}
+function setE(id,inp,t){$('#e-'+id).textContent=t;inp.setAttribute('aria-invalid',!!t)}
+f.addEventListener('submit',function(e){e.preventDefault();
+ if(f.website.value){return} /* honeypot: silently drop bots */
+ var ok=true,n=f.name,m=f.email,d=f.description;
+ setE('nm',n,n.value.trim()?'':'Please enter your name.');
+ setE('em',m,/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(m.value)?'':'Please enter a valid email address.');
+ setE('ds',d,d.value.trim().length>9?'':'Please describe your project in a sentence or two.');
+ var first=[n,m,d].filter(function(x){return x.getAttribute('aria-invalid')==='true'})[0];
+ if(first){first.focus();return}
+ if(!CONFIG.endpoint){
+  var mail=CONFIG.email?'<a href="mailto:'+CONFIG.email+'?subject=PeakSpark%20enquiry" style="color:inherit">'+CONFIG.email+'</a>':'';
+  say('','bad',mail?'The online form is not connected yet, so your message was not sent. Please email us directly at '+mail+'.':'The online form is not connected yet, so your message was not sent. Please check back shortly.');return}
+ sb.disabled=true;sb.textContent='SENDING...';say('Sending your enquiry...','ok');
+ var body={name:n.value.trim(),email:m.value.trim(),company:f.company.value.trim(),need:f.need.value,description:d.value.trim()};
+ fetch(CONFIG.endpoint,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(body)})
+ .then(function(r){if(!r.ok)throw new Error(r.status);say('Enquiry sent. Thank you, we will get back to you.','ok');f.reset()})
+ .catch(function(){var mail=CONFIG.email?' You can also email '+CONFIG.email+'.':'';say('Something went wrong and your enquiry was not sent. Please try again.'+mail,'bad')})
+ .finally(function(){sb.disabled=false;sb.textContent='SEND ENQUIRY'})});
+})();
+</script>
+</body>
+</html>
